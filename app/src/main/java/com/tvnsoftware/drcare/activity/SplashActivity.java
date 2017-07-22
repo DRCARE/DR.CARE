@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.tvnsoftware.drcare.R;
+import com.tvnsoftware.drcare.api.RetrofitManager;
 
 public class SplashActivity extends AppCompatActivity {
     long wait = 1500;
@@ -13,6 +14,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        RetrofitManager.getInstance().config(getApplicationContext());
         new Handler().postDelayed(new Runnable() {
 
             /*
