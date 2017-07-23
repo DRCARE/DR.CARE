@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void transferToPatientPage() {
-        //Patient activity
+        //Patient activity hello
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(i);
     }
