@@ -69,7 +69,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ExaminationDetailedActivity" />
         <activity android:name=".activity.ChatActivity" />
-        <activity android:name=".activity.QrCodeActivity"></activity>
     </application>
 
 </manifest>
