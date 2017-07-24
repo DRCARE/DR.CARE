@@ -1,6 +1,7 @@
 package com.tvnsoftware.drcare.api;
 
 import com.tvnsoftware.drcare.model.Login.LoginResponse;
+import com.tvnsoftware.drcare.model.medicineRecords.MedicineRecordResponse;
 import com.tvnsoftware.drcare.model.users.UsersResponse;
 
 import retrofit2.Call;
@@ -17,4 +18,6 @@ public interface RestApiEndpointInterface {
     Call<UsersResponse> getUsers();
     @POST("users/signin")
     Call<LoginResponse> Login( @Field("USER_CODE")Integer loginId);
+    @GET("medicalRecordDetail/getAll")
+    Call<MedicineRecordResponse> getMedicine();
 }
