@@ -3,6 +3,7 @@ package com.tvnsoftware.drcare.api.restservice;
 import android.content.Context;
 
 import com.tvnsoftware.drcare.api.CommonInterface;
+import com.tvnsoftware.drcare.api.RetrofitManager;
 import com.tvnsoftware.drcare.model.medicineRecords.MedicineRecordResponse;
 
 /**
@@ -12,7 +13,8 @@ import com.tvnsoftware.drcare.model.medicineRecords.MedicineRecordResponse;
 public class MedicalService extends BaseService<String, MedicineRecordResponse> {
     @Override
     public void request(Context context, CommonInterface.ModelResponse<MedicineRecordResponse> callBack) {
-
+        RetrofitManager.getInstance().sendApiRequest(RetrofitManager.getInstance()
+                .getRestApiEndpointInterface().getMedicine(), callBack);
     }
 
     @Override
