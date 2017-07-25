@@ -69,6 +69,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ExaminationDetailedActivity" />
         <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.PatientHistoryActivity" />
+        <activity
+            android:name=".activity.PatientHistoryDetailActivity"
+            android:label="@string/title_activity_patient_history_detail"></activity>
     </application>
 
 </manifest>

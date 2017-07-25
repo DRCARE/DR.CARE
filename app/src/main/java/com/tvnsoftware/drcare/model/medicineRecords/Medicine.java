@@ -11,6 +11,8 @@ public class Medicine {
     public int MedicalCode;
     @SerializedName("USER_CODE")
     public int UserCode;
+    @SerializedName("USER_PATIENT_ID")
+    public int UserPatientId;
     @SerializedName("DISEASE_CODE")
     public int DiseaseCode;
     @SerializedName("MEDICAL_SYMPTOMS")
