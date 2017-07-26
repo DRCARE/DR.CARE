@@ -8,5 +8,4 @@
     <string name="home_label_search_hint">search</string>
     <string name="home_get_history">history</string>
     <string name="label_explanatory">mandatory</string>
-    <string name="title_activity_patient_history_detail">PatientHistoryDetailActivity</string>
 </resources>

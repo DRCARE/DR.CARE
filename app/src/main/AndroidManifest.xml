@@ -64,15 +64,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.DiagnosisActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ExaminationDetailedActivity" />
         <activity android:name=".activity.ChatActivity" />
-        <activity android:name=".activity.PatientHistoryActivity" />
-        <activity
-            android:name=".activity.PatientHistoryDetailActivity"
-            android:label="@string/title_activity_patient_history_detail"></activity>
     </application>
 
 </manifest>
