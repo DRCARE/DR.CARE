@@ -7,18 +7,20 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Medicine {
-    @SerializedName("MEDICAL_CODE")
+    @SerializedName("MecRcDetailsID")
     public int MedicalCode;
-    @SerializedName("USER_CODE")
+    @SerializedName("DoctorID")
     public int UserCode;
-    @SerializedName("USER_PATIENT_ID")
+    @SerializedName("MecRcID")
     public int UserPatientId;
-    @SerializedName("DISEASE_CODE")
+    @SerializedName("DiseaseID")
     public int DiseaseCode;
-    @SerializedName("MEDICAL_SYMPTOMS")
+    @SerializedName("Symptoms")
     public String MedicalSymptoms;
-    @SerializedName("MEDICAL_DAY_CREATED")
+    @SerializedName("DayCreated")
     public String MedicalDayCreated;
+    @SerializedName("isTaken")
+    public int isTaken;
 
     public Medicine() {
     }
@@ -61,5 +63,21 @@ public class Medicine {
 
     public void setMedicalDayCreated(String medicalDayCreated) {
         MedicalDayCreated = medicalDayCreated;
+    }
+
+    public int getUserPatientId() {
+        return UserPatientId;
+    }
+
+    public void setUserPatientId(int userPatientId) {
+        UserPatientId = userPatientId;
+    }
+
+    public int getIsTaken() {
+        return isTaken;
+    }
+
+    public void setIsTaken(int isTaken) {
+        this.isTaken = isTaken;
     }
 }
