@@ -4,16 +4,17 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -22,8 +23,12 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tvnsoftware.drcare.R;
+import com.tvnsoftware.drcare.Utils.SpaceItemDecoration;
+import com.tvnsoftware.drcare.adapter.DoctorAdapter;
+import com.tvnsoftware.drcare.model.medicalrecord.MedicalRecord;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     @BindView(R.id.doctor_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.rvDoctor)
-    RecyclerView rvDoctor;
+    @BindView(R.id.list_patient)
+    RecyclerView rvListPatient;
+
     private MenuItem mMenuItem;
     private Menu mSearchMenu;
     private SearchViewQueryCallback searchViewQueryCallback;
+    private DoctorAdapter doctorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +60,56 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        applyFontForToolbarTitle(toolbar);
         setUpSearchToolbar();
+        setUpCardView();
+        prepareData();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                //TODO : add chat function
-                Intent i = new Intent(MainActivity.this, DiagnosisActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                startActivity(intent);
             }
         });
+    }
+
+    private void setUpCardView(){
+        doctorAdapter = new DoctorAdapter(this);
+        rvListPatient.setAdapter(doctorAdapter);
+        StaggeredGridLayoutManager staggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setGapStrategy(
+                StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        rvListPatient.setLayoutManager(staggeredGridLayoutManager);
+        SpaceItemDecoration decoration = new SpaceItemDecoration(24);
+        rvListPatient.addItemDecoration(decoration);
+    }
+
+    private void prepareData(){
+        MedicalRecord medicalRecord = new MedicalRecord("ABC1234", "John Cena", "pending");
+        doctorAdapter.addPatient(medicalRecord);
+
+        medicalRecord = new MedicalRecord("ADE1234", "Samn Nguyen", "pending");
+        doctorAdapter.addPatient(medicalRecord);
+    }
+
+    protected void applyFontForToolbarTitle(Toolbar toolbar) {
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
+            View view = toolbar.getChildAt(i);
+            if (view instanceof TextView) {
+                TextView tv = (TextView) view;
+                tv.setTextSize(24);
+                Typeface titleFont = Typeface.
+                        createFromAsset(getAssets(), "Pacifico.ttf");
+                if (tv.getText().equals(toolbar.getTitle())) {
+                    tv.setTypeface(titleFont);
+                    break;
+                }
+            }
+        }
     }
 
     protected interface SearchViewQueryCallback {
@@ -74,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void setUpSearchToolbar() {
-        //this.mSearchToolbar = searchToolbar;
         if (mSearchToolbar != null) {
             mSearchToolbar.inflateMenu(R.menu.menu_search);
             mSearchMenu = mSearchToolbar.getMenu();
@@ -93,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             MenuItemCompat.setOnActionExpandListener(mMenuItem,
                     new MenuItemCompat.OnActionExpandListener() {
                         @Override public boolean onMenuItemActionCollapse(MenuItem item) {
-                            // Do something when collapsed
+                            // Do something when collapse
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 circleReveal(R.id.search_toolbar, 1, true, false);
                             } else {
@@ -103,11 +149,9 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         @Override public boolean onMenuItemActionExpand(MenuItem item) {
-                            // Do something when expanded
                             return true;
                         }
                     });
-
             initSearchView();
         } else {
             Log.d("toolbar", "setSearchToolbar: NULL");
@@ -117,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
     private void initSearchView() {
         final SearchView searchView =
                 (SearchView) mSearchMenu.findItem(R.id.action_search).getActionView();
-
         // Enable/Disable Submit button in the keyboard
         searchView.setSubmitButtonEnabled(false);
 
@@ -138,14 +181,16 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchViewQueryCallback.onQuerySubmit(query);
+//                searchViewQueryCallback.onQuerySubmit(query);
+//                searchView.clearFocus();
+                doctorAdapter.filter(query.toString().trim());
                 searchView.clearFocus();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return true;
+                return false;
             }
         });
     }
@@ -192,10 +237,6 @@ public class MainActivity extends AppCompatActivity {
 
         // start the animation
         anim.start();
-    }
-
-    @Override
-    public void onBackPressed() {
     }
 
     @Override

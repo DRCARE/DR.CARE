@@ -6,18 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tvnsoftware.drcare.R;
+import com.tvnsoftware.drcare.Utils.DividerItemDecoration;
 import com.tvnsoftware.drcare.adapter.DiagnosisAdapter;
+import com.tvnsoftware.drcare.model.medicalrecord.MedicalRecord;
 import com.tvnsoftware.drcare.model.users.Medicine;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,9 +29,10 @@ import butterknife.ButterKnife;
 
 public class DiagnosisActivity extends AppCompatActivity {
 
-    private List<Medicine> medicines = new ArrayList<>();
     private RecyclerView recyclerView;
     private DiagnosisAdapter diagnosisAdapter;
+    private MedicalRecord medicalRecord;
+
     @BindView(R.id.btnAdd)
     Button btnAdd;
     @BindView(R.id.et_medicine)
@@ -39,6 +41,8 @@ public class DiagnosisActivity extends AppCompatActivity {
     EditText etTimes;
     @BindView(R.id.et_quantity)
     EditText etQuantity;
+    @BindView(R.id.tv_dia_patientName)
+    TextView tvPatientName;
 
 
     @Override
@@ -47,12 +51,10 @@ public class DiagnosisActivity extends AppCompatActivity {
         setContentView(R.layout.doctor_diagnosis_layout);
         ButterKnife.bind(this);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        diagnosisAdapter = new DiagnosisAdapter();
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(diagnosisAdapter);
+        setUpRecyclerView();
+        prepareData();
+        checkEmptyPrescription();
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,9 +64,54 @@ public class DiagnosisActivity extends AppCompatActivity {
         });
     }
 
+    private void prepareData(){
+        medicalRecord = getIntent().getParcelableExtra("patient");
+        tvPatientName.setText(medicalRecord.getPatientName());
+        etMedicine.addTextChangedListener(mTextWatcher);
+        etTimes.addTextChangedListener(mTextWatcher);
+        etQuantity.addTextChangedListener(mTextWatcher);
+    }
+
+    private void setUpRecyclerView(){
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        diagnosisAdapter = new DiagnosisAdapter();
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(diagnosisAdapter);
+    }
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            checkEmptyPrescription();
+        }
+    };
+
+    private void checkEmptyPrescription() {
+        String medicineName = etMedicine.getText().toString();
+        String medicineTimes = etTimes.getText().toString();
+        String medicineQuantity = etQuantity.getText().toString();
+
+        if (medicineName.isEmpty() || medicineQuantity.isEmpty() || medicineTimes.isEmpty()){
+            btnAdd.setEnabled(false);
+        } else {
+            btnAdd.setEnabled(true);
+        }
+    }
+
     private void addPrescription(){
-        Medicine medicine = new Medicine(etMedicine.getText().toString(), etQuantity.getText().toString(),
-                etTimes.getText().toString());
+        Medicine medicine = new Medicine(etMedicine.getText().toString().trim(), etQuantity.getText().toString().trim(),
+                etTimes.getText().toString().trim());
         diagnosisAdapter.add(medicine);
         Toast.makeText(getBaseContext(), "Added successfully", Toast.LENGTH_SHORT).show();
     }
