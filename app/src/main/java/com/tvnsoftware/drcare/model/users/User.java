@@ -8,9 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
     @SerializedName("USER_CODE")
-    private int UserCode;
+    private String UserCode;
     @SerializedName("ROLE_CODE")
-    private int RoleCode;
+    private Integer RoleCode;
     @SerializedName("USER_NAME")
     private String UserName;
     @SerializedName("USER_ID_CARD_NO")
@@ -33,19 +33,19 @@ public class User {
     public User() {
     }
 
-    public int getUserCode() {
+    public String getUserCode() {
         return UserCode;
     }
 
-    public void setUserCode(int userCode) {
+    public void setUserCode(String userCode) {
         UserCode = userCode;
     }
 
-    public int getRoleCode() {
+    public Integer getRoleCode() {
         return RoleCode;
     }
 
-    public void setRoleCode(int roleCode) {
+    public void setRoleCode(Integer roleCode) {
         RoleCode = roleCode;
     }
 

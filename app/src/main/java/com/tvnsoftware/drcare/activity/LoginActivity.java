@@ -14,7 +14,9 @@ import com.tvnsoftware.drcare.Utils.CommonConvert;
 import com.tvnsoftware.drcare.api.CommonInterface;
 import com.tvnsoftware.drcare.api.restservice.LoginService;
 import com.tvnsoftware.drcare.api.restservice.UserService;
+import com.tvnsoftware.drcare.data.FakeData;
 import com.tvnsoftware.drcare.model.Login.LoginResponse;
+import com.tvnsoftware.drcare.model.users.User;
 import com.tvnsoftware.drcare.model.users.UsersResponse;
 
 import butterknife.BindView;
@@ -40,9 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(i);
-                callAPI();
+                login();
             }
         });
         mBtnQrCode.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +62,8 @@ public class LoginActivity extends AppCompatActivity {
             if (scanResult.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Scanned: " + scanResult.getContents(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "Scanned: " + scanResult.getContents(), Toast.LENGTH_LONG).show();
+                loginQRCode(scanResult.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -84,26 +85,32 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void loginQRCode(String userCode) {
+        User data = null;
+        for (User u : FakeData.getUsers()) {
+            if (u.getUserCode().equals(userCode.toUpperCase())) {
+                data = u;
+            }
+        }
+        if (data != null) {
+            transferToPage(data.getRoleCode());
+        } else {
+            Toast.makeText(this, "Invalid UserCode", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void login() {
-        LoginService loginService = new LoginService();
-        loginService.setRequest(CommonConvert.stringToInterge(mEdtLoginId.getText().toString()));
-        loginService.request(this, new CommonInterface.ModelResponse<LoginResponse>() {
-            @Override
-            public void onSuccess(LoginResponse result) {
-                if (result.isStatus()) {
-                    //Todo: login success and save data into userLogin
-                    transferToPage(result.getUsers().get(0).getRoleCode());
-
-                } else {
-                    //Todo: handle error
-                }
+        User data = null;
+        for (User u : FakeData.getUsers()) {
+            if (u.getUserCode().equals(mEdtLoginId.getText().toString().toUpperCase())) {
+                data = u;
             }
-
-            @Override
-            public void onFail() {
-                //Todo: handle error
-            }
-        });
+        }
+        if (data != null) {
+            transferToPage(data.getRoleCode());
+        } else {
+            Toast.makeText(this, "Invalid UserCode", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void transferToPage(int userRole) {
@@ -117,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void transferToPatientPage() {
         //Patient activity hello
-        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        Intent i = new Intent(LoginActivity.this, HistoryActivity.class);
         startActivity(i);
     }
 

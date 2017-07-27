@@ -4,8 +4,8 @@
     android:id="@+id/cv_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="16dp"
     android:orientation="vertical"
-    card_view:cardBackgroundColor="@color/mdtp_button_color"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="0dp">
 

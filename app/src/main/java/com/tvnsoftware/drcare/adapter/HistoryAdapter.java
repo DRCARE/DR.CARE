@@ -73,7 +73,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mHistories.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -92,5 +92,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+    public Context getContext() {
+        return mContext;
     }
 }
