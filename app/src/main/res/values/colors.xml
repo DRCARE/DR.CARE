@@ -6,4 +6,7 @@
     <color name="black">#000000</color>
     <color name="bg_line_input_login">#E5DDCB</color>
     <color name="main_bg">#ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="main_black">#000000</color>
+    <color name="colorPrimaryOpacity">#CC639310</color>
 </resources>

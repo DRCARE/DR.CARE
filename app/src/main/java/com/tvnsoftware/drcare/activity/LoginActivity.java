@@ -15,6 +15,7 @@ import com.tvnsoftware.drcare.api.CommonInterface;
 import com.tvnsoftware.drcare.api.restservice.LoginService;
 import com.tvnsoftware.drcare.api.restservice.UserService;
 import com.tvnsoftware.drcare.data.FakeData;
+import com.tvnsoftware.drcare.manager.CoreManager;
 import com.tvnsoftware.drcare.model.Login.LoginResponse;
 import com.tvnsoftware.drcare.model.users.User;
 import com.tvnsoftware.drcare.model.users.UsersResponse;
@@ -52,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+        if(CoreManager.getInstance().getUserData() != null){
+            transferToPage(CoreManager.getInstance().getUserData().getRoleCode());
+        }
     }
 
     @Override
@@ -107,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         if (data != null) {
+            CoreManager.getInstance().setUserData(this, data);
             transferToPage(data.getRoleCode());
         } else {
             Toast.makeText(this, "Invalid UserCode", Toast.LENGTH_LONG).show();

@@ -71,7 +71,8 @@
         <activity
             android:name=".activity.HistoryActivity"
             android:label="@string/title_activity_history"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.GuidanceActivity"></activity>
     </application>
 
 </manifest>
