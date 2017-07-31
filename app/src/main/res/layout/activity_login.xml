@@ -46,6 +46,14 @@
             android:background="@drawable/button_square_primary_normal"
             android:text="Login With QR code"
             android:textColor="@color/white" />
+        <Button
+            android:id="@+id/btn_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_square_primary_normal"
+            android:text="Show Alarm"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </RelativeLayout>

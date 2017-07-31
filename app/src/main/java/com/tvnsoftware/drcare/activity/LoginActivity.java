@@ -1,6 +1,11 @@
 package com.tvnsoftware.drcare.activity;
 
+import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_qr_code)
     Button mBtnQrCode;
 
+    @BindView(R.id.btn_alarm)
+    Button mBtnAlarm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +64,12 @@ public class LoginActivity extends AppCompatActivity {
         if(CoreManager.getInstance().getUserData() != null){
             transferToPage(CoreManager.getInstance().getUserData().getRoleCode());
         }
+        mBtnAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlarm();
+            }
+        });
     }
 
     @Override
@@ -72,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
     private void callAPI() {
@@ -137,5 +152,14 @@ public class LoginActivity extends AppCompatActivity {
         //Doctor activity
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(i);
+    }
+    private void showAlarm(){
+        Intent i = new Intent(this, AlarmActivity.class);
+        startActivity(i);
+//        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+//        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+//        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+//        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+//        this.startActivityForResult(intent, 5);
     }
 }
