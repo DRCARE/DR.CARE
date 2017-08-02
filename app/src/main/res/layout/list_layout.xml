@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvDoctor"
+        android:id="@+id/list_patient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appbar">
@@ -16,9 +16,9 @@
         android:layout_margin="16dp"
         app:fabSize="normal"
         android:src="@drawable/ic_message"
-        app:backgroundTint="@color/accent"
+        app:backgroundTint="#474747"
         app:layout_anchorGravity="end|bottom"
-        app:layout_anchor="@+id/rvDoctor"
+        app:layout_anchor="@+id/list_patient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </android.support.design.widget.CoordinatorLayout>

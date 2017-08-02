@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "221000043082",
-    "firebase_url": "https://drcare-776e3.firebaseio.com",
-    "project_id": "drcare-776e3",
-    "storage_bucket": "drcare-776e3.appspot.com"
+    "project_number": "101418779437",
+    "firebase_url": "https://drcare-ba732.firebaseio.com",
+    "project_id": "drcare-ba732",
+    "storage_bucket": "drcare-ba732.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:221000043082:android:f7d1eeecf7736478",
+        "mobilesdk_app_id": "1:101418779437:android:f7d1eeecf7736478",
         "android_client_info": {
           "package_name": "com.tvnsoftware.drcare"
         }
       },
       "oauth_client": [
         {
-          "client_id": "221000043082-q5potdjuleqv8trtun0s1s2ui270lm1g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tvnsoftware.drcare",
-            "certificate_hash": "00b364f39da0184a0267a71a62a6b34aebe08411"
-          }
-        },
-        {
-          "client_id": "221000043082-vque99eatjp2568vme783d82sm9rebk0.apps.googleusercontent.com",
+          "client_id": "101418779437-ktas33kgoipjaagajjphm1mf0gmb1r7s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAxtyV0U_teIZTv0B5WiUEyGTzhPqt3f0E"
+          "current_key": "AIzaSyBMo17Xa3Z_L3XQp2nbfX_R99d53T0Sks0"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "221000043082-vque99eatjp2568vme783d82sm9rebk0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

@@ -5,7 +5,7 @@ import android.content.Context;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tvnsoftware.drcare.Utils.Contant;
+import com.tvnsoftware.drcare.Utils.Constants;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -46,7 +46,7 @@ public class RetrofitManager {
 
     public RestApiEndpointInterface getRestApiEndpointInterface() {
         if (null == restApiEndpointInterface) {
-            restApiEndpointInterface = initialRetrofit(Contant.BASE_URL);
+            restApiEndpointInterface = initialRetrofit(Constants.BASE_URL);
         }
         return restApiEndpointInterface;
     }
