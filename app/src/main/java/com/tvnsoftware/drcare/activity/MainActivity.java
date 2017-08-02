@@ -2,6 +2,7 @@ package com.tvnsoftware.drcare.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -9,9 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.transition.TransitionManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -32,6 +35,8 @@ import com.tvnsoftware.drcare.model.medicalrecord.MedicalRecord;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.tvnsoftware.drcare.R.dimen.abc_action_button_min_width_material;
 import static com.tvnsoftware.drcare.R.dimen.abc_action_button_min_width_overflow_material;
@@ -66,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
         setUpCardView();
         prepareData();
 
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/NexaLight.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,24 +87,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     private void setUpCardView(){
         doctorAdapter = new DoctorAdapter(this);
         rvListPatient.setAdapter(doctorAdapter);
-        StaggeredGridLayoutManager staggeredGridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        staggeredGridLayoutManager.setGapStrategy(
-                StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-        rvListPatient.setLayoutManager(staggeredGridLayoutManager);
-        SpaceItemDecoration decoration = new SpaceItemDecoration(24);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext());
+        rvListPatient.setLayoutManager(linearLayoutManager);
+        SpaceItemDecoration decoration = new SpaceItemDecoration(4);
         rvListPatient.addItemDecoration(decoration);
     }
 
     private void prepareData(){
-        MedicalRecord medicalRecord = new MedicalRecord("ABC1234", "John Cena", "pending");
-        doctorAdapter.addPatient(medicalRecord);
-
-        medicalRecord = new MedicalRecord("ADE1234", "Samn Nguyen", "pending");
-        doctorAdapter.addPatient(medicalRecord);
+//        MedicalRecord medicalRecord = new MedicalRecord("ABC1234", "John Cena", "pending", R.drawable.res_patient);
+//        doctorAdapter.addPatient(medicalRecord);
+//
+//        medicalRecord = new MedicalRecord("ADE1234", "Samn Nguyen", "pending", R.drawable.res_patient2);
+//        doctorAdapter.addPatient(medicalRecord);
+//
+//        medicalRecord = new MedicalRecord("NYC3001", "Tam Huynh", "pending", R.drawable.res_patient3);
+//        doctorAdapter.addPatient(medicalRecord);
+//
+//        medicalRecord = new MedicalRecord("VNN3001", "Duc Loc", "pending", R.drawable.res_patient4);
+//        doctorAdapter.addPatient(medicalRecord);
     }
 
     protected void applyFontForToolbarTitle(Toolbar toolbar) {
@@ -103,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView tv = (TextView) view;
                 tv.setTextSize(24);
                 Typeface titleFont = Typeface.
-                        createFromAsset(getAssets(), "Pacifico.ttf");
+                        createFromAsset(getAssets(), "fonts/NexaBold.otf");
                 if (tv.getText().equals(toolbar.getTitle())) {
                     tv.setTypeface(titleFont);
                     break;

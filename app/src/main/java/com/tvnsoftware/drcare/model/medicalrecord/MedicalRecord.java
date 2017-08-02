@@ -14,21 +14,28 @@ public class MedicalRecord implements Parcelable{
     private String patientCode;
     private String patientName;
     private String patientStatus;
+    private int patientPhoto;
+
+
 
     public MedicalRecord() {
     }
 
-    public MedicalRecord(String patientCode, String patientName, String patientStatus) {
+    public MedicalRecord(String patientCode, String patientName, String patientStatus, int patientPhoto) {
         this.patientCode = patientCode;
         this.patientName = patientName;
         this.patientStatus = patientStatus;
+        this.patientPhoto = patientPhoto;
     }
 
     protected MedicalRecord(Parcel in) {
         patientCode = in.readString();
         patientName = in.readString();
         patientStatus = in.readString();
+        patientPhoto = in.readInt();
     }
+
+
 
     public static final Creator<MedicalRecord> CREATOR = new Creator<MedicalRecord>() {
         @Override
@@ -66,6 +73,14 @@ public class MedicalRecord implements Parcelable{
         this.patientStatus = patientStatus;
     }
 
+    public int getPatientPhoto() {
+        return patientPhoto;
+    }
+
+    public void setPatientPhoto(int patientPhoto) {
+        this.patientPhoto = patientPhoto;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -76,5 +91,6 @@ public class MedicalRecord implements Parcelable{
         dest.writeString(patientCode);
         dest.writeString(patientName);
         dest.writeString(patientStatus);
+        dest.writeInt(patientPhoto);
     }
 }

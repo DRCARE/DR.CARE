@@ -15,4 +15,6 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
     <color name="base">#FAFAFA</color>
+    <color name="colorPrimaryOpacity">#CC639310</color>
+
 </resources>
