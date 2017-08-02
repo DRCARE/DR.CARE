@@ -10,14 +10,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.transition.TransitionManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -31,7 +29,10 @@ import android.widget.TextView;
 import com.tvnsoftware.drcare.R;
 import com.tvnsoftware.drcare.Utils.SpaceItemDecoration;
 import com.tvnsoftware.drcare.adapter.DoctorAdapter;
+import com.tvnsoftware.drcare.adapter.ROLE_STATE;
 import com.tvnsoftware.drcare.model.medicalrecord.MedicalRecord;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +41,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.tvnsoftware.drcare.R.dimen.abc_action_button_min_width_material;
 import static com.tvnsoftware.drcare.R.dimen.abc_action_button_min_width_overflow_material;
+import static com.tvnsoftware.drcare.activity.LoginActivity.EXTRA_ROLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private SearchViewQueryCallback searchViewQueryCallback;
     private DoctorAdapter doctorAdapter;
 
+    private ROLE_STATE stateByRole;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
         applyFontForToolbarTitle(toolbar);
         setUpSearchToolbar();
         setUpCardView();
+
+        int getRoleID = getIntent().getIntExtra(EXTRA_ROLE, 1);
+        doctorAdapter.setState(getRoleID);
+
+        stateByRole = (getRoleID == 1) ? ROLE_STATE.PATIENT : ROLE_STATE.DOCTOR;
+
         prepareData();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -102,17 +112,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareData(){
-//        MedicalRecord medicalRecord = new MedicalRecord("ABC1234", "John Cena", "pending", R.drawable.res_patient);
-//        doctorAdapter.addPatient(medicalRecord);
-//
-//        medicalRecord = new MedicalRecord("ADE1234", "Samn Nguyen", "pending", R.drawable.res_patient2);
-//        doctorAdapter.addPatient(medicalRecord);
-//
-//        medicalRecord = new MedicalRecord("NYC3001", "Tam Huynh", "pending", R.drawable.res_patient3);
-//        doctorAdapter.addPatient(medicalRecord);
-//
-//        medicalRecord = new MedicalRecord("VNN3001", "Duc Loc", "pending", R.drawable.res_patient4);
-//        doctorAdapter.addPatient(medicalRecord);
+        if(stateByRole == ROLE_STATE.DOCTOR){
+            List<MedicalRecord> MR = MedicalRecord.getPatientList();
+            Log.d("MainActivity: ", "TEST -- Prepare Data for DOCTOR: MR = " + MR.size());
+            doctorAdapter.setData(MR);
+        }else {
+            List<MedicalRecord> MR = MedicalRecord.getMRHistoryList();
+            Log.d("MainActivity: ", "TEST -- Prepare Data for PATIENT: MR = " + MR.size());
+            doctorAdapter.setData(MR);
+        }
     }
 
     protected void applyFontForToolbarTitle(Toolbar toolbar) {

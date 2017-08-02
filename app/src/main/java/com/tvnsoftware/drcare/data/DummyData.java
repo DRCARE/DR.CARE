@@ -1,3 +1,4 @@
+/*
 package com.tvnsoftware.drcare.data;
 
 import com.tvnsoftware.drcare.model.medicineRecords.Medicine;
@@ -5,9 +6,11 @@ import com.tvnsoftware.drcare.model.medicineRecords.Medicine;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * Created by Thieusike on 7/27/2017.
- */
+ *//*
+
 
 public class DummyData {
     public static List<Medicine> getMedicine(){
@@ -22,3 +25,4 @@ public class DummyData {
         return  res;
     }
 }
+*/

@@ -9,10 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.tvnsoftware.drcare.Application;
 import com.tvnsoftware.drcare.R;
 import com.tvnsoftware.drcare.api.CommonInterface;
 import com.tvnsoftware.drcare.api.restservice.UserService;
-import com.tvnsoftware.drcare.manager.CoreManager;
 import com.tvnsoftware.drcare.model.users.User;
 import com.tvnsoftware.drcare.model.users.UsersResponse;
 
@@ -91,10 +91,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickLogin(){
         String inputCode = edtLoginId.getText().toString();
 
+        List<User> userList = Application.users;
         if(inputCode.isEmpty() || inputCode.length() == 0 || inputCode.equals("") || inputCode == null)
             Toast.makeText(this, "Please enter UserID to login", Toast.LENGTH_SHORT).show();
         else {
-            List<User> userList = User.getUserList();
             boolean isUser = false;
             int roleID = 1;
             for (User user : userList){

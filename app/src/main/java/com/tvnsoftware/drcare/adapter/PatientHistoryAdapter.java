@@ -1,3 +1,4 @@
+/*
 package com.tvnsoftware.drcare.adapter;
 
 import android.content.Context;
@@ -17,9 +18,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+*/
 /**
  * Created by Thieusike on 7/24/2017.
- */
+ *//*
+
 
 public class PatientHistoryAdapter extends RecyclerView.Adapter<PatientHistoryAdapter.ViewHolder> {
     private Context mContext;
@@ -93,3 +96,4 @@ public class PatientHistoryAdapter extends RecyclerView.Adapter<PatientHistoryAd
         return this.mContext;
     }
 }
+*/

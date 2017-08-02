@@ -27,6 +27,7 @@
             android:layout_height="44dp"
             android:background="@drawable/bg_edit_normal"
             android:hint="Login ID"
+            android:maxLines="1"
             android:padding="4dp" />
 
         <Button

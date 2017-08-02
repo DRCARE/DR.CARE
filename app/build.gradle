@@ -45,6 +45,8 @@ dependencies {
     compile 'com.google.firebase:firebase-database:11.0.1'
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
     compile "com.andkulikov:transitionseverywhere:1.7.4"
+    compile 'com.kyleduo.switchbutton:library:1.4.6'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'

@@ -1,3 +1,4 @@
+/*
 package com.tvnsoftware.drcare.activity;
 
 import android.content.Intent;
@@ -46,3 +47,4 @@ public class PatientHistoryActivity extends AppCompatActivity {
         });
     }
 }
+*/

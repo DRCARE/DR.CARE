@@ -1,6 +1,7 @@
 package com.tvnsoftware.drcare.model.users;
 
 import com.google.gson.annotations.SerializedName;
+import com.tvnsoftware.drcare.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class User {
 
     //// TODO: 28-Jul-17 : nếu có lấy từ API về thì : sửa bỏ UserCode
     private String userCode;
+    private int doctorPhoto;
     private static List<User> userList;
 
     public String getUserCode() {
@@ -56,11 +58,12 @@ public class User {
         this.userCode = userCode;
     }
 
-    public User(int userID, String userCode , String userName, int roleID) {
+    public User(int userID, String userCode , String userName, int roleID, int doctorPhoto) {
         UserID = userID;
         RoleID = roleID;
         UserName = userName;
         this.userCode = userCode;
+        this.doctorPhoto = doctorPhoto;
     }
 
     private static void initializeUserList(){
@@ -78,11 +81,11 @@ public class User {
         userList.add(new User("PTN8372", "Phạm Kiều Thảo Nguyên", 1));
 
         //doctor
-        userList.add(new User(5, "TBN2374", "Trần Lâm Bảo Nhân", 2));
-        userList.add(new User(1, "NHT3249", "Nguyễn Vũ Hoàng Trinh", 2));
-        userList.add(new User(2, "LQH4239", "Lưu Quang Huy", 2));
-        userList.add(new User(3, "PTT8930", "Phạm Trọng Tội", 2));
-        userList.add(new User(4, "NPA6969", "Nightury Michaelis", 2));
+        userList.add(new User(5, "TBN2374", "Allison Scott", 2, R.drawable.res_doctor4));
+        userList.add(new User(1, "NHT3249", "Gwen Seaver", 2, R.drawable.res_doctor2));
+        userList.add(new User(2, "LQH4239", "Brett Vandenberg", 2, R.drawable.res_doctor3));
+        userList.add(new User(3, "PTT8930", "Fiona McConnell", 2, R.drawable.res_doctor1));
+        userList.add(new User(4, "BIW1234", "Brandi Irwin", 2, R.drawable.res_doctor5));
     }
 
     public static List<User> getUserList(){
@@ -121,9 +124,29 @@ public class User {
         }
         return result;
     }
+
+    public static int getPhotoByID(int userID) {
+        int result = R.drawable.ic_person;
+        for(User user : userList){
+            if (userID == user.getUserID()){
+                result = user.getDoctorPhoto();
+            }
+        }
+        return result;
+    }
+
+    public int getDoctorPhoto() {
+        return doctorPhoto;
+    }
+
+    public void setDoctorPhoto(int doctorPhoto) {
+        this.doctorPhoto = doctorPhoto;
+    }
+
     /**
      * end Samn ___
      */
+
 
     public int getUserID() {
         return UserID;
