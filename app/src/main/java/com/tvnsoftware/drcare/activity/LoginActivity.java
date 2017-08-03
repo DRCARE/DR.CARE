@@ -1,8 +1,14 @@
 package com.tvnsoftware.drcare.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,30 +34,33 @@ public class LoginActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
     public static final String EXTRA_ROLE = "EXTRA_ROLE";
 
-    @BindView(R.id.btn_login)
+    @BindView(R.id.bt_login)
     Button mBtnLogin;
-    @BindView(R.id.btn_qr_code)
+    @BindView(R.id.bt_qr_code)
     Button mBtnQrCode;
-    @BindView(R.id.edt_login_id)
+    @BindView(R.id.edt_login)
     EditText edtLoginId;
+    @BindView(R.id.cvLogin)
+    CardView cvLogin;
+    @BindView(R.id.fabRegister)
+    FloatingActionButton fabRegister;
 
-    @BindView(R.id.btn_alarm)
-    Button mBtnAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_layout);
         ButterKnife.bind(this);
+
         //ToDo something
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //login();
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+//       /* mBtnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //login();
+//                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(i);
+//            }
+//        });*/
         mBtnQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,12 +71,6 @@ public class LoginActivity extends AppCompatActivity {
 //        if(CoreManager.getInstance().getUserData() != null){
 //            transferToPage(CoreManager.getInstance().getUserData().getRoleCode());
 //        }
-        mBtnAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //showAlarm();
-            }
-        });
     }
 
     @Override
@@ -87,56 +90,72 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.btn_login)
-    public void onClickLogin(){
+    //@OnClick(R.id.bt_login)
+    public void onClickLogin() {
         String inputCode = edtLoginId.getText().toString();
 
         List<User> userList = Application.users;
-        if(inputCode.isEmpty() || inputCode.length() == 0 || inputCode.equals("") || inputCode == null)
+        if (inputCode.isEmpty() || inputCode.length() == 0 || inputCode.equals("") || inputCode == null)
             Toast.makeText(this, "Please enter UserID to login", Toast.LENGTH_SHORT).show();
         else {
             boolean isUser = false;
             int roleID = 1;
-            for (User user : userList){
-                if(user.getUserCode().equalsIgnoreCase(inputCode)){
+            for (User user : userList) {
+                if (user.getUserCode().equalsIgnoreCase(inputCode)) {
                     //check role
                     roleID = user.getRoleID();
                     isUser = true;
                     break;
                 }
             }
-            //if(User.checkIsUser(inputCode.toLowerCase(), userList)){
-            if(isUser){
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                int getRoleID ; //= User.checkRole(inputCode.toLowerCase(), userList);
-                //getRoleID = 2;
-                Log.d(TAG, "TEST: role ID = " + roleID);
-                i.putExtra(EXTRA_ROLE, roleID);
+            if (User.checkIsUser(inputCode.toLowerCase(), userList)) {
+                if (isUser) {
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    int getRoleID; //= User.checkRole(inputCode.toLowerCase(), userList);
+                    //getRoleID = 2;
 
-                startActivity(i);
-                finish();
-            }
-            else {
-                Toast.makeText(this, "Wrong User ID!", Toast.LENGTH_SHORT).show();
-                edtLoginId.setText("");
+                    Log.d(TAG, "TEST: role ID = " + roleID);
+                    i.putExtra(EXTRA_ROLE, roleID);
+
+                    startActivity(i);
+                    finish();
+                } else {
+                    Toast.makeText(this, "Wrong User ID!", Toast.LENGTH_SHORT).show();
+                    edtLoginId.setText("");
+                }
             }
         }
     }
 
-    private void callAPI() {
-        UserService userService = new UserService();
-        userService.request(this, new CommonInterface.ModelResponse<UsersResponse>() {
-            @Override
-            public void onSuccess(UsersResponse result) {
-                Log.d(TAG, result.toString());
-            }
+    @OnClick({R.id.bt_login, R.id.fabRegister})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fabRegister:
+                getWindow().setExitTransition(null);
+                getWindow().setEnterTransition(null);
 
-            @Override
-            public void onFail() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options =
+                            ActivityOptions.makeSceneTransitionAnimation(this, fabRegister, fabRegister.getTransitionName());
+                    startActivity(new Intent(this, RegisterActivity.class), options.toBundle());
+                } else {
+                    startActivity(new Intent(this, RegisterActivity.class));
+                }
+                break;
+            case R.id.bt_login:
+                Explode explode = new Explode();
+                explode.setDuration(500);
 
-            }
-        });
+                onClickLogin();
+                getWindow().setExitTransition(explode);
+                getWindow().setEnterTransition(explode);
+//                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
+//                Intent i2 = new Intent(this,MainActivity.class);
+//                startActivity(i2, oc2.toBundle());
+                break;
+        }
     }
+
 
 //    private void loginQRCode(String userCode) {
 //        User data = null;

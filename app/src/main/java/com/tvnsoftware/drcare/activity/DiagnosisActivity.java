@@ -1,5 +1,6 @@
 package com.tvnsoftware.drcare.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import com.tvnsoftware.drcare.model.users.Medicine;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Admin on 7/26/2017.
@@ -63,8 +66,22 @@ public class DiagnosisActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recyclerView.setVisibility(View.VISIBLE);
                 addPrescription();
+                etMedicine.setText("");
+                etTimes.setText("");
+                etQuantity.setText("");
             }
         });
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/NexaLight.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void prepareData(){
@@ -77,7 +94,7 @@ public class DiagnosisActivity extends AppCompatActivity {
 
     private void setUpRecyclerView(){
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        diagnosisAdapter = new DiagnosisAdapter();
+        diagnosisAdapter = new DiagnosisAdapter(this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

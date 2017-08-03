@@ -97,7 +97,7 @@ public class User {
         int isUser = 0;
         for (User user : userList){
             if(user.getUserCode().toLowerCase().equals(user_code)){
-                isUser = 0;
+                isUser = 1;
                 break;
             }
         }

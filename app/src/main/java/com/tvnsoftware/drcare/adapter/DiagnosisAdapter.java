@@ -1,5 +1,6 @@
 package com.tvnsoftware.drcare.adapter;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by Admin on 7/26/2017.
@@ -24,10 +27,11 @@ import butterknife.ButterKnife;
 public class DiagnosisAdapter extends RecyclerView.Adapter<DiagnosisAdapter.ViewHolder> {
 
     private List<Medicine> medicines;
+    private Context context;
 
-
-    public DiagnosisAdapter() {
+    public DiagnosisAdapter(Context context) {
         this.medicines = new ArrayList<>();
+        this.context = context;
     }
 
     public void add(Medicine medicine){
@@ -58,27 +62,42 @@ public class DiagnosisAdapter extends RecyclerView.Adapter<DiagnosisAdapter.View
     }
 
     private void confirmOnRemove(ViewHolder holder, final int position){
-        AlertDialog.Builder alert = new AlertDialog.Builder(
-                holder.tvPrescriptionMedicine.getContext());
-        alert.setTitle("Confirmation!!");
-        alert.setMessage("Are you sure to delete this record ?");
-        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+//        AlertDialog.Builder alert = new AlertDialog.Builder(
+//                holder.tvPrescriptionMedicine.getContext());
+//        alert.setTitle("Confirmation!!");
+//        alert.setMessage("Are you sure to delete this record ?");
+//        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                medicines.remove(position);
+//                notifyItemRemoved(position);
+//                notifyItemRangeRemoved(position, getItemCount());
+//                dialog.dismiss();
+//            }
+//        });
+//        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        alert.show();
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                medicines.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeRemoved(position, getItemCount());
-                dialog.dismiss();
-            }
-        });
-        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        alert.show();
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText("Won't be able to recover this")
+                .setConfirmText("Yes,delete it!")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        medicines.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeRemoved(position, getItemCount());
+                        sDialog.dismissWithAnimation();
+                    }
+                });
+        sweetAlertDialog.show();
     }
 
     @Override

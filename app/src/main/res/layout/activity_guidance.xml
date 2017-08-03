@@ -4,7 +4,7 @@
     android:id="@+id/relative_layout_gui"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gui_normal"
+    android:background="#31ba9e"
     android:orientation="vertical">
 
     <LinearLayout

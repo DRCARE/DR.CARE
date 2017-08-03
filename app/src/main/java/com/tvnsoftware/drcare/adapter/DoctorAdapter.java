@@ -117,7 +117,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
                 .bitmapTransform(new GlideCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.ivCover);
-        holder.ivCover.setOnClickListener(new View.OnClickListener() {
+        holder.btnAdmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DiagnosisActivity.class);
@@ -206,8 +206,8 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
             btnAdmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int pos = getAdapterPosition();
-                    onClick_startIntent(pos);
+//                    int pos = getAdapterPosition();
+//                    onClick_startIntent(pos);
                 }
             });
         }

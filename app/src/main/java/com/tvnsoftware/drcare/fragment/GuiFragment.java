@@ -52,23 +52,13 @@ private ImageView mImageViewGuiPic;
     private int getPic(int pos) {
         switch (pos) {
             case 0:
-                return R.drawable.guidance_001;
+                return R.drawable.guidance_01;
             case 1:
-                return R.drawable.guidance_002;
+                return R.drawable.guidance_02;
             case 2:
                 return R.drawable.guidance_003;
-            case 3:
-                return R.drawable.guidance_004;
-            case 4:
-                return R.drawable.guidance_001;
-            case 5:
-                return R.drawable.guidance_002;
-            case 6:
-                return R.drawable.guidance_003;
-            case 7:
-                return R.drawable.guidance_004;
             default:
-                return R.drawable.guidance_001;
+                return R.drawable.guidance_01;
         }
     }
 }
