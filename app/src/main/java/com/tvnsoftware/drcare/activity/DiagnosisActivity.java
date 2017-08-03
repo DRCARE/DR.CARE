@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,6 +79,8 @@ public class DiagnosisActivity extends AppCompatActivity {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        setupWindowAnimations();
     }
 
     @Override
@@ -90,6 +94,12 @@ public class DiagnosisActivity extends AppCompatActivity {
         etMedicine.addTextChangedListener(mTextWatcher);
         etTimes.addTextChangedListener(mTextWatcher);
         etQuantity.addTextChangedListener(mTextWatcher);
+    }
+
+    private void setupWindowAnimations() {
+        Fade fade = new Fade();
+        fade.setDuration(1000);
+        getWindow().setEnterTransition(fade);
     }
 
     private void setUpRecyclerView(){
@@ -130,8 +140,8 @@ public class DiagnosisActivity extends AppCompatActivity {
     }
 
     private void addPrescription(){
-        Medicine medicine = new Medicine(etMedicine.getText().toString().trim(), etQuantity.getText().toString().trim(),
-                etTimes.getText().toString().trim());
+        Medicine medicine = new Medicine(etMedicine.getText().toString().trim(), etQuantity.getText().toString().trim() + " pills",
+                etTimes.getText().toString().trim() + " time(s)/day");
         diagnosisAdapter.add(medicine);
         Toast.makeText(getBaseContext(), "Added successfully", Toast.LENGTH_SHORT).show();
     }
