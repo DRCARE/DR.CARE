@@ -16,6 +16,7 @@ import com.tvnsoftware.drcare.R;
 import com.tvnsoftware.drcare.Utils.GlideCircleTransformation;
 import com.tvnsoftware.drcare.activity.AlarmActivity;
 import com.tvnsoftware.drcare.activity.DiagnosisActivity;
+import com.tvnsoftware.drcare.activity.DiagnosisDetailActivity;
 import com.tvnsoftware.drcare.model.medicalrecord.MedicalRecord;
 
 import java.util.ArrayList;
@@ -215,7 +216,8 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
 
     private void onClick_startIntent(int position){
         MedicalRecord medRec = medicalRecords.get(position);
-        Intent intent = new Intent(context, AlarmActivity.class);
+//        Intent intent = new Intent(context, AlarmActivity.class);
+        Intent intent = new Intent(context, DiagnosisDetailActivity.class);
         if(stateByRole == ROLE_STATE.PATIENT){
             intent.putExtra(DiagnosisActivity.EXTRA_PATIENT, medRec);
         } else{

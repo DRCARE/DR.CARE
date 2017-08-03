@@ -2,26 +2,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tvnsoftware.drcare">
+
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+ HEAD
         tools:replace="android:icon"
+
+        android:name=".Application"
+ a447000d48190c52fccec7ca93b156ab92f8080f
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".Application"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,13 +41,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".activity.AuthenActivity">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+        <!-- <activity android:name=".activity.AuthenActivity"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
+
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -52,15 +58,16 @@
             android:label="HistoryActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.GuidanceActivity" />
+ HEAD
         <activity android:name=".activity.RegisterActivity" />
-        <activity
-        android:name=".activity.AlarmActivity"
-        android:label="@string/title_activity_alarm"
-        android:theme="@style/AppTheme" />
-        <activity android:name=".activity.Alarm.AlarmDetailsActivity" />
-        <activity android:name=".activity.Alarm.AlarmONActivity">
 
-        </activity>
+ a447000d48190c52fccec7ca93b156ab92f8080f
+        <activity
+            android:name=".activity.AlarmActivity"
+            android:label="@string/title_activity_alarm"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.Alarm.AlarmDetailsActivity" />
+        <activity android:name=".activity.Alarm.AlarmONActivity"></activity>
 
         <receiver
             android:name=".activity.Alarm.AlarmReceiver"
@@ -73,6 +80,8 @@
         <service
             android:name=".activity.Alarm.AlarmService"
             android:enabled="true" />
+
+        <activity android:name=".activity.DiagnosisDetailActivity"></activity>
     </application>
 
 </manifest>

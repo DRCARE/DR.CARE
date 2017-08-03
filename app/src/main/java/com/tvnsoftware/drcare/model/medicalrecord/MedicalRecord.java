@@ -12,12 +12,21 @@ import java.util.List;
  * Created by Admin on 7/26/2017.
  */
 
-public class MedicalRecord implements Parcelable{
+public class MedicalRecord implements Parcelable {
 
     private String patientCode;
     private String patientName;
     private String patientStatus;
     private int patientPhoto;
+    private List<Prescription> prescriptionList;
+
+    public List<Prescription> getPrescriptionList() {
+        return prescriptionList;
+    }
+
+    public void setPrescriptionList(List<Prescription> prescriptionList) {
+        this.prescriptionList = prescriptionList;
+    }
 
     public MedicalRecord() {
     }
@@ -105,15 +114,16 @@ public class MedicalRecord implements Parcelable{
     }
 
     public MedicalRecord(int doctorID, String doctorName, String diseaseName,
-                         String dayCreated, int doctorPhoto) {
+                         String dayCreated, int doctorPhoto, List<Prescription> prescriptions) {
         DoctorID = doctorID;
         DoctorName = doctorName;
         DiseaseName = diseaseName;
         DayCreated = dayCreated;
         this.doctorPhoto = doctorPhoto;
+        this.prescriptionList = prescriptions;
     }
 
-    private static void dataForDoctor(){
+    private static void dataForDoctor() {
         patientList = new ArrayList<>();
         patientList.add(new MedicalRecord("ABC1234", "John Cena", 0));
         patientList.add(new MedicalRecord("SAM6969", "Samn Nguyen", 0));
@@ -126,23 +136,36 @@ public class MedicalRecord implements Parcelable{
         patientList.add(new MedicalRecord("PTN8372", "Phạm Kiều Thảo Nguyên", 1));
     }
 
-    public static List<MedicalRecord> getPatientList(){
+    public static List<MedicalRecord> getPatientList() {
         dataForDoctor();
         return patientList;
     }
 
-    private static void dataForPatient(){
-        medicalList = new ArrayList<>();
-        medicalList.add(new MedicalRecord(5,"Allison Scott", "Sốt phát ban", "24/07/2014", R.drawable.res_doctor4));
-        medicalList.add(new MedicalRecord(1, "Gwen Seaver", "Viêm họng cấp", "5/9/2014", R.drawable.res_doctor2));
-        medicalList.add(new MedicalRecord(2, "Brett Vandenberg", "Thấp khớp", "30/10/2015", R.drawable.res_doctor3));
-        medicalList.add(new MedicalRecord(3,  "Fiona McConnell", "Viêm mũi dị ứng", "16/11/2015", R.drawable.res_doctor1));
-        medicalList.add(new MedicalRecord(5,"Allison Scott", "Viêm phế quản", "21/3/2016", R.drawable.res_doctor4));
-        medicalList.add(new MedicalRecord(2, "Brett Vandenberg", "Thoái hóa cột sống cổ", "4/12/1016", R.drawable.res_doctor3));
-        medicalList.add(new MedicalRecord(1, "Gwen Seaver", "Rối loạn tiêu hóa", "28/6/2017", R.drawable.res_doctor2));
+    private static List<Prescription> pre() {
+        List<Prescription> res = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            Prescription prescription = new Prescription();
+            prescription.setName("Paracetamol " + i);
+            prescription.setQuantity(10);
+            prescription.setUnit("Gói");
+            prescription.setUsage("Ngày dùng 2 lần mỗi lần 10 viên");
+            res.add(prescription);
+        }
+        return res;
     }
 
-    public static List<MedicalRecord> getMRHistoryList(){
+    private static void dataForPatient() {
+        medicalList = new ArrayList<>();
+        medicalList.add(new MedicalRecord(5, "Allison Scott", "Sốt phát ban", "24/07/2014", R.drawable.res_doctor4, pre()));
+        medicalList.add(new MedicalRecord(1, "Gwen Seaver", "Viêm họng cấp", "5/9/2014", R.drawable.res_doctor2, pre()));
+        medicalList.add(new MedicalRecord(2, "Brett Vandenberg", "Thấp khớp", "30/10/2015", R.drawable.res_doctor3, pre()));
+        medicalList.add(new MedicalRecord(3, "Fiona McConnell", "Viêm mũi dị ứng", "16/11/2015", R.drawable.res_doctor1, pre()));
+        medicalList.add(new MedicalRecord(5, "Allison Scott", "Viêm phế quản", "21/3/2016", R.drawable.res_doctor4, pre()));
+        medicalList.add(new MedicalRecord(2, "Brett Vandenberg", "Thoái hóa cột sống cổ", "4/12/1016", R.drawable.res_doctor3, pre()));
+        medicalList.add(new MedicalRecord(1, "Gwen Seaver", "Rối loạn tiêu hóa", "28/6/2017", R.drawable.res_doctor2, pre()));
+    }
+
+    public static List<MedicalRecord> getMRHistoryList() {
         dataForPatient();
         return medicalList;
     }
@@ -157,6 +180,8 @@ public class MedicalRecord implements Parcelable{
         DoctorName = in.readString();
         DiseaseName = in.readString();
         DayCreated = in.readString();
+        prescriptionList = new ArrayList<>();
+        in.readList(prescriptionList, getClass().getClassLoader());
     }
 
     @Override
@@ -170,6 +195,7 @@ public class MedicalRecord implements Parcelable{
         dest.writeString(DoctorName);
         dest.writeString(DiseaseName);
         dest.writeString(DayCreated);
+        dest.writeList(prescriptionList);
     }
 
     @Override
