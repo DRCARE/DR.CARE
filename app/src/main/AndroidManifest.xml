@@ -13,7 +13,6 @@
 
     <application
         tools:replace="android:icon"
-
         android:name=".Application"
         android:allowBackup="true"
         android:icon="@drawable/drcare_logo"
