@@ -50,7 +50,7 @@ public class GuidanceActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 7) {
+                if (position == 1) {
                     mButNext.setText(getString(R.string.label_but_start));
                     mBtnSkip.setVisibility(View.INVISIBLE);
                 } else {
@@ -74,7 +74,7 @@ public class GuidanceActivity extends AppCompatActivity {
         mButNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPagerGui.getCurrentItem() == 7) {
+                if (mPagerGui.getCurrentItem() == 1) {
                     Intent intent = new Intent(GuidanceActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {

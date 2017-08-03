@@ -99,7 +99,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setupWindowAnimations();
+
+        rvListPatient.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
+                    fab.hide();
+                } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
+                    fab.show();
+                }
+            }
+        });
     }
+
+
 
     private void setupWindowAnimations() {
         Slide slide = new Slide();

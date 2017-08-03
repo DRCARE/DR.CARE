@@ -55,8 +55,6 @@ private ImageView mImageViewGuiPic;
                 return R.drawable.guidance_01;
             case 1:
                 return R.drawable.guidance_02;
-            case 2:
-                return R.drawable.guidance_003;
             default:
                 return R.drawable.guidance_01;
         }

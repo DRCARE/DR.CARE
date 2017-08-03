@@ -22,6 +22,6 @@ public class GuiAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 8;
+        return 2;
     }
 }
