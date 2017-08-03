@@ -1,227 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/doctor_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.tvnsoftware.drcare.activity.DiagnosisDetailActivity">
+    android:fitsSystemWindows="true"
+    android:background="@color/light_grayish_cyan">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_shadow_start_color"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:fitsSystemWindows="true"
+        app:elevation="10dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="4dp"
-            android:text="Diagnosis" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:padding="4dp"
-            android:text="Cancer" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="General" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Doctor" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Contact" />
-    </LinearLayout>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="2dp"
-        app:cardPreventCornerOverlap="false">
-
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#e7e8e8">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_cover"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:adjustViewBounds="true"
-                android:paddingLeft="10dp"
-                android:paddingTop="8dp"
-                tools:src="@drawable/res_patient" />
+            <include
+                layout="@layout/toolbar"
+                android:id="@+id/toolbar"/>
 
-            <TextView
-                android:id="@+id/tv_patient_name"
-                style="@style/LightHeadlineTextStyle"
-                fontPath="fonts/NexaBold.otf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/iv_cover"
-                android:layout_toRightOf="@id/iv_cover"
-                android:textColor="@color/mdtp_transparent_black"
-                android:textSize="16dp"
-                tools:ignore="MissingPrefix"
-                tools:text="John Cena" />
+            <include
+                layout="@layout/search_toolbar"
+                android:visibility="gone"/>
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
 
-            <TextView
-                android:id="@+id/tv_patient_code"
-                style="@style/LightHeadlineTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_patient_name"
-                android:layout_toEndOf="@+id/iv_cover"
-                android:layout_toRightOf="@id/iv_cover"
-                android:textColor="@color/mdtp_transparent_black"
-                tools:text="ABC1234" />
-
-            <TextView
-                android:id="@+id/tv_patient_status"
-                style="@style/LightHeadlineTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_patient_code"
-                android:layout_toEndOf="@+id/iv_cover"
-                android:layout_toRightOf="@id/iv_cover"
-                android:textColor="@color/mdtp_transparent_black"
-                tools:text="pending" />
-
-            <TextView
-                android:id="@+id/tv_patient_gender"
-                style="@style/LightHeadlineTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_patient_status"
-                android:layout_toEndOf="@+id/iv_cover"
-                android:layout_toRightOf="@id/iv_cover"
-                android:text="Gender: male"
-                android:textColor="@color/mdtp_transparent_black"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_patient_blood"
-                style="@style/LightHeadlineTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_patient_gender"
-                android:layout_toEndOf="@+id/iv_cover"
-                android:layout_toRightOf="@id/iv_cover"
-                android:text="Blood type: A"
-                android:textColor="@color/mdtp_transparent_black"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_patient_pressure"
-                style="@style/LightHeadlineTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_patient_blood"
-                android:layout_toEndOf="@+id/iv_cover"
-                android:layout_toRightOf="@id/iv_cover"
-                android:text="Blood pressure: 80mmHg"
-                android:textColor="@color/mdtp_transparent_black"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btnAdmit"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/tv_patient_pressure"
-                android:layout_marginBottom="10dp"
-                android:layout_toEndOf="@+id/iv_cover"
-                android:layout_toRightOf="@+id/iv_cover"
-                android:paddingLeft="-9dp"
-                android:text="Admit"
-                android:textSize="12sp"
-                android:theme="@style/PrimaryFlatButton"
-                android:visibility="gone" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Doctor" />
+        <include
+            android:id="@+id/layout_details"
+            layout="@layout/layout_diagnosis_details"
+            />
+    </FrameLayout>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Remind" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Name" />
-
-        <TextView
-            android:id="@+id/qu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Qu" />
-
-        <TextView
-            android:id="@+id/unit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Unit" />
-
-        <TextView
-            android:id="@+id/usage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Usage" />
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rc_prescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+</RelativeLayout>

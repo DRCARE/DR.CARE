@@ -46,6 +46,8 @@ public class User {
     //// TODO: 28-Jul-17 : nếu có lấy từ API về thì : sửa bỏ UserCode
     private String userCode;
     private int doctorPhoto;
+    private String doctorSpecial;
+
     private static List<User> userList;
 
     public String getUserCode() {
@@ -58,12 +60,14 @@ public class User {
         this.userCode = userCode;
     }
 
-    public User(int userID, String userCode , String userName, int roleID, int doctorPhoto) {
+    public User(int userID, String userCode , String userName,
+                int roleID, int doctorPhoto, String doctorSpecial) {
         UserID = userID;
         RoleID = roleID;
         UserName = userName;
         this.userCode = userCode;
         this.doctorPhoto = doctorPhoto;
+        this.doctorSpecial = doctorSpecial;
     }
 
     private static void initializeUserList(){
@@ -81,11 +85,11 @@ public class User {
         userList.add(new User("PTN8372", "Phạm Kiều Thảo Nguyên", 1));
 
         //doctor
-        userList.add(new User(5, "TBN2374", "Allison Scott", 2, R.drawable.res_doctor4));
-        userList.add(new User(1, "NHT3249", "Gwen Seaver", 2, R.drawable.res_doctor2));
-        userList.add(new User(2, "LQH4239", "Brett Vandenberg", 2, R.drawable.res_doctor3));
-        userList.add(new User(3, "PTT8930", "Fiona McConnell", 2, R.drawable.res_doctor1));
-        userList.add(new User(4, "BIW1234", "Brandi Irwin", 2, R.drawable.res_doctor5));
+        userList.add(new User(5, "TBN2374", "Allison Scott", 2, R.drawable.res_doctor4, "General practitioner (BS đa khoa)"));
+        userList.add(new User(1, "NHT3249", "Gwen Seaver", 2, R.drawable.res_doctor2, "gastroenterologist (BS chuyên khoa Tiêu hóa)"));
+        userList.add(new User(2, "LQH4239", "Brett Vandenberg", 2, R.drawable.res_doctor3, "Orthopedist (BS ngoại chỉnh hình)"));
+        userList.add(new User(3, "PTT8930", "Fiona McConnell", 2, R.drawable.res_doctor1, "Dermatology (BS da liễu)"));
+        userList.add(new User(4, "BIW1234", "Brandi Irwin", 2, R.drawable.res_doctor5, "General practitioner (BS đa khoa)"));
     }
 
     public static List<User> getUserList(){
@@ -115,24 +119,19 @@ public class User {
         return Role;
     }
 
-    public static String getUserNameByID(int userID) {
+    public static String getDoctorSpecial(int userID) {
         String result = "Default";
         for(User user : userList){
             if (userID == user.getUserID()){
-                result = user.getUserName();
+                result = user.getDoctorSpecial();
+                break;
             }
         }
         return result;
     }
 
-    public static int getPhotoByID(int userID) {
-        int result = R.drawable.ic_person;
-        for(User user : userList){
-            if (userID == user.getUserID()){
-                result = user.getDoctorPhoto();
-            }
-        }
-        return result;
+    public String getDoctorSpecial() {
+        return doctorSpecial;
     }
 
     public int getDoctorPhoto() {

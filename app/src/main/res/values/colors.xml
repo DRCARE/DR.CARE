@@ -20,4 +20,14 @@
     <color name="base">#FAFAFA</color>
     <color name="colorPrimaryOpacity">#CC639310</color>
 
+    <!--color new-->
+    <color name="background_basic">#31ba9e</color>
+    <color name="background_light">#4ed0b6</color>
+    <color name="background_extra_light">#c6f0e8</color>
+    <color name="background_lightest">#b2ebe0</color>
+    <color name="light_grayish_cyan">#effbf8</color>
+
+    <!--color of letter-->
+    <color name="dark_cyan">#2ca68d</color>
+    <color name="darker_cyan">#208168</color>
 </resources>

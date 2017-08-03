@@ -36,7 +36,6 @@ public class DiagnosisActivity extends AppCompatActivity {
     private DiagnosisAdapter diagnosisAdapter;
     private MedicalRecord medicalRecord;
 
-    public static final String EXTRA_PATIENT = "EXTRA_PATIENT";
     public static final String EXTRA_DOCTOR = "EXTRA_DOCTOR";
 
     @BindView(R.id.btnAdd)

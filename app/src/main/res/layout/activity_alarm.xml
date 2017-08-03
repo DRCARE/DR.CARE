@@ -12,20 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:elevation="10dp">
+        app:elevation="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            app:titleTextColor="@color/accent"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            style="@style/ToolbarStyle"
-            android:background="@color/primary_dark_grayish"/>
-            <!--android:layout_height="?attr/actionBarSize"-->
-
+        <include
+            layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout

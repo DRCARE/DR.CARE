@@ -38,8 +38,8 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Prescription prescription = prescriptionList.get(position);
-        holder.txtName.setText(prescription.getName());
-        holder.txtQu.setText(prescription.getQuantity() + " ");
+        holder.tvNameMed.setText(prescription.getName());
+        holder.tvQty.setText(prescription.getQuantity() + " ");
         holder.txtUnit.setText(prescription.getUnit());
         holder.txtUsage.setText(prescription.getUsage());
     }
@@ -50,13 +50,13 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.name)
-        TextView txtName;
-        @BindView(R.id.qu)
-        TextView txtQu;
-        @BindView(R.id.unit)
+        @BindView(R.id.tvNameMed)
+        TextView tvNameMed;
+        @BindView(R.id.tvQtyMed)
+        TextView tvQty;
+        @BindView(R.id.tvUnitMed)
         TextView txtUnit;
-        @BindView(R.id.usage)
+        @BindView(R.id.tvUsage)
         TextView txtUsage;
         public ViewHolder(View itemView) {
             super(itemView);

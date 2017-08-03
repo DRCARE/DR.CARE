@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.tvnsoftware.drcare.R;
+import com.tvnsoftware.drcare.model.users.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class MedicalRecord implements Parcelable {
     private String DiseaseName;
     private String DayCreated;
     private int doctorPhoto;
+    private String doctorSpecial;
 
     private static List<MedicalRecord> patientList;
     private static List<MedicalRecord> medicalList;
@@ -95,16 +97,12 @@ public class MedicalRecord implements Parcelable {
         return patientPhoto;
     }
 
-    public void setPatientPhoto(int patientPhoto) {
-        this.patientPhoto = patientPhoto;
+    public String getDoctorSpecial() {
+        return doctorSpecial;
     }
 
     public int getDoctorPhoto() {
         return doctorPhoto;
-    }
-
-    public void setDoctorPhoto(int doctorPhoto) {
-        this.doctorPhoto = doctorPhoto;
     }
 
     public MedicalRecord(String patientCode, String patientName, int isTaken) {
@@ -114,12 +112,15 @@ public class MedicalRecord implements Parcelable {
     }
 
     public MedicalRecord(int doctorID, String doctorName, String diseaseName,
-                         String dayCreated, int doctorPhoto, List<Prescription> prescriptions) {
+                         String dayCreated, int doctorPhoto,
+                         String doctorSpecial,
+                         List<Prescription> prescriptions) {
         DoctorID = doctorID;
         DoctorName = doctorName;
         DiseaseName = diseaseName;
         DayCreated = dayCreated;
         this.doctorPhoto = doctorPhoto;
+        this.doctorSpecial = doctorSpecial;
         this.prescriptionList = prescriptions;
     }
 
@@ -148,7 +149,7 @@ public class MedicalRecord implements Parcelable {
             prescription.setName("Paracetamol " + i);
             prescription.setQuantity(10);
             prescription.setUnit("Gói");
-            prescription.setUsage("Ngày dùng 2 lần mỗi lần 10 viên");
+            prescription.setUsage("2 times/day/1 unit");
             res.add(prescription);
         }
         return res;
@@ -156,13 +157,23 @@ public class MedicalRecord implements Parcelable {
 
     private static void dataForPatient() {
         medicalList = new ArrayList<>();
-        medicalList.add(new MedicalRecord(5, "Allison Scott", "Sốt phát ban", "24/07/2014", R.drawable.res_doctor4, pre()));
-        medicalList.add(new MedicalRecord(1, "Gwen Seaver", "Viêm họng cấp", "5/9/2014", R.drawable.res_doctor2, pre()));
-        medicalList.add(new MedicalRecord(2, "Brett Vandenberg", "Thấp khớp", "30/10/2015", R.drawable.res_doctor3, pre()));
-        medicalList.add(new MedicalRecord(3, "Fiona McConnell", "Viêm mũi dị ứng", "16/11/2015", R.drawable.res_doctor1, pre()));
-        medicalList.add(new MedicalRecord(5, "Allison Scott", "Viêm phế quản", "21/3/2016", R.drawable.res_doctor4, pre()));
-        medicalList.add(new MedicalRecord(2, "Brett Vandenberg", "Thoái hóa cột sống cổ", "4/12/1016", R.drawable.res_doctor3, pre()));
-        medicalList.add(new MedicalRecord(1, "Gwen Seaver", "Rối loạn tiêu hóa", "28/6/2017", R.drawable.res_doctor2, pre()));
+        medicalList.add(new MedicalRecord(5, "Allison Scott", "Fever", "24/07/2014",
+                R.drawable.res_doctor4, User.getDoctorSpecial(5),pre()));
+        medicalList.add(new MedicalRecord(1, "Gwen Seaver", "Gastricism (Viêm dạ dày)", "5/9/2014",
+                R.drawable.res_doctor2, User.getDoctorSpecial(1),pre()));
+        medicalList.add(new MedicalRecord(2, "Brett Vandenberg", "Thấp khớp", "30/10/2015",
+                R.drawable.res_doctor3, User.getDoctorSpecial(2),pre()));
+        medicalList.add(new MedicalRecord(3, "Fiona McConnell", "Alergy (dị ứng)",
+                "16/11/2015",
+                R.drawable.res_doctor1, User.getDoctorSpecial(3),pre()));
+        medicalList.add(new MedicalRecord(5, "Allison Scott", "Viêm phế quản",
+                "21/3/2016",
+                R.drawable.res_doctor4, User.getDoctorSpecial(5),pre()));
+        medicalList.add(new MedicalRecord(2, "Brett Vandenberg", "Thoái hóa cột sống cổ",
+                "4/12/1016",
+                R.drawable.res_doctor3, User.getDoctorSpecial(2),pre()));
+        medicalList.add(new MedicalRecord(1, "Gwen Seaver", "Digestive disorders (Rối loạn tiêu hóa)",
+                "28/6/2017", R.drawable.res_doctor2, User.getDoctorSpecial(1),pre()));
     }
 
     public static List<MedicalRecord> getMRHistoryList() {
@@ -170,18 +181,20 @@ public class MedicalRecord implements Parcelable {
         return medicalList;
     }
 
+
     protected MedicalRecord(Parcel in) {
         patientCode = in.readString();
         patientName = in.readString();
         patientStatus = in.readString();
         patientPhoto = in.readInt();
+        prescriptionList = in.createTypedArrayList(Prescription.CREATOR);
         isTaken = in.readInt();
         DoctorID = in.readInt();
         DoctorName = in.readString();
         DiseaseName = in.readString();
         DayCreated = in.readString();
-        prescriptionList = new ArrayList<>();
-        in.readList(prescriptionList, getClass().getClassLoader());
+        doctorPhoto = in.readInt();
+        doctorSpecial = in.readString();
     }
 
     @Override
@@ -190,12 +203,14 @@ public class MedicalRecord implements Parcelable {
         dest.writeString(patientName);
         dest.writeString(patientStatus);
         dest.writeInt(patientPhoto);
+        dest.writeTypedList(prescriptionList);
         dest.writeInt(isTaken);
         dest.writeInt(DoctorID);
         dest.writeString(DoctorName);
         dest.writeString(DiseaseName);
         dest.writeString(DayCreated);
-        dest.writeList(prescriptionList);
+        dest.writeInt(doctorPhoto);
+        dest.writeString(doctorSpecial);
     }
 
     @Override

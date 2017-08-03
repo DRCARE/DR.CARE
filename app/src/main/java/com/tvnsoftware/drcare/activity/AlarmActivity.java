@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tvnsoftware.drcare.R;
@@ -74,6 +77,7 @@ public class AlarmActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         this.context = this;
+        applyFontForToolbarTitle(toolbar);
         setUpView();
 
         initializeAlarm();
@@ -134,13 +138,14 @@ public class AlarmActivity extends AppCompatActivity {
             //pendingIntent -> send to AlarmReceiver => EXTRA VALUE is sent to AlarmReceiver
             pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, chosenRemind.getRemindID(), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            Toast.makeText(this, "ALARM ON", Toast.LENGTH_SHORT).show();
         }
         else {
             //Extra VALUE to intent:: tell that Alarm is ON
             alarm_intent.putExtra(EXTRA, ALARM_OFF);
             pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, chosenRemind.getRemindID(), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmManager.cancel(pendingIntent);
-            Log.d("Alarm:: ", "off :: " + pendingIntent.getCreatorUid());
+            Toast.makeText(this, "ALARM OFF", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -202,4 +207,21 @@ public class AlarmActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_ALARM_UPDATE, remindToUpdate);
         startActivityForResult(intent, REQUEST_CODE);
     }
+
+    protected void applyFontForToolbarTitle(Toolbar toolbar) {
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
+            View view = toolbar.getChildAt(i);
+            if (view instanceof TextView) {
+                TextView tv = (TextView) view;
+                tv.setTextSize(24);
+                Typeface titleFont = Typeface.
+                        createFromAsset(getAssets(), "fonts/NexaBold.otf");
+                if (tv.getText().equals(toolbar.getTitle())) {
+                    tv.setTypeface(titleFont);
+                    break;
+                }
+            }
+        }
+    }
+
 }

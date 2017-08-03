@@ -127,7 +127,6 @@ public class AlarmService extends Service {
         PendingIntent pendingIntentAlarm = PendingIntent.getActivity(this,
                                         chosenRemind.getRemindID(), intentAlarmOn, 0);
 
-
         //make the Notification Params
         Notification notificationPop = new NotificationCompat.Builder(mcontext)
                 .setContentTitle("DrCare")

@@ -1,6 +1,7 @@
 package com.tvnsoftware.drcare.activity.Alarm;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -59,6 +60,7 @@ public class AlarmDetailsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         setupToolbar();
+        applyFontForToolbarTitle(toolbar);
 
         IS_UPDATE_ALARM = getIntent().getBooleanExtra(EXTRA_IS_UPDATE, false);
         remind = getIntent().getParcelableExtra(EXTRA_ALARM_UPDATE);
@@ -92,7 +94,7 @@ public class AlarmDetailsActivity extends AppCompatActivity {
         }
         //java.util.Calendar.HOUR_OF_DAY + ":" + java.util.Calendar.MINUTE);
         cbIsSnooze.setChecked(true);
-        tvExpireAlarm.setText("dayCreate" + "presciption.getDays");
+        tvExpireAlarm.setText("7 days after");
         tvChosenRepeat.setText(repeatList.get(1).getRepeatDay());
         etNoteAlarm.setText("Take Medicine");
     }
@@ -208,4 +210,21 @@ public class AlarmDetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
+    protected void applyFontForToolbarTitle(Toolbar toolbar) {
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
+            View view = toolbar.getChildAt(i);
+            if (view instanceof TextView) {
+                TextView tv = (TextView) view;
+                tv.setTextSize(24);
+                Typeface titleFont = Typeface.
+                        createFromAsset(getAssets(), "fonts/NexaBold.otf");
+                if (tv.getText().equals(toolbar.getTitle())) {
+                    tv.setTypeface(titleFont);
+                    break;
+                }
+            }
+        }
+    }
+
 }

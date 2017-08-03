@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tvnsoftware.drcare.R;
 import com.tvnsoftware.drcare.Utils.GlideCircleTransformation;
-import com.tvnsoftware.drcare.activity.AlarmActivity;
 import com.tvnsoftware.drcare.activity.DiagnosisActivity;
 import com.tvnsoftware.drcare.activity.DiagnosisDetailActivity;
 import com.tvnsoftware.drcare.model.medicalrecord.MedicalRecord;
@@ -88,6 +87,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
         holder.tvPatientName.setText(medicalRecord.getDiseaseName());
         holder.tvPatientCode.setText("Doctor: " + medicalRecord.getDoctorName());
         holder.tvPatientStatus.setText("Date: " + medicalRecord.getDayCreated());
+        holder.tv_patient_time.setVisibility(View.GONE);
         Glide.with(context).load(medicalRecord.getDoctorPhoto())
                 .thumbnail(0.5f)
                 .crossFade()
@@ -96,14 +96,6 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
                 .bitmapTransform(new GlideCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.ivCover);
-        holder.ivCover.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), DiagnosisActivity.class);
-                intent.putExtra("patient", medicalRecord);
-                v.getContext().startActivity(intent);
-            }
-        });
     }
 
     private void BindView_DoctorScreen(ViewHolder holder, final MedicalRecord medicalRecord) {
@@ -188,6 +180,8 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
         TextView tvPatientBlood;
         @BindView(R.id.tv_patient_pressure)
         TextView tvPatientPressure;
+        @BindView(R.id.tv_patient_time)
+        TextView tv_patient_time;
         @BindView(R.id.btnAdmit)
         Button btnAdmit;
         public ViewHolder(View itemView) {
@@ -207,8 +201,8 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
             btnAdmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    int pos = getAdapterPosition();
-//                    onClick_startIntent(pos);
+                    int pos = getAdapterPosition();
+                    onClick_startIntent(pos);
                 }
             });
         }
@@ -216,11 +210,12 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
 
     private void onClick_startIntent(int position){
         MedicalRecord medRec = medicalRecords.get(position);
-//        Intent intent = new Intent(context, AlarmActivity.class);
-        Intent intent = new Intent(context, DiagnosisDetailActivity.class);
+        Intent intent;
         if(stateByRole == ROLE_STATE.PATIENT){
-            intent.putExtra(DiagnosisActivity.EXTRA_PATIENT, medRec);
+            intent = new Intent(context, DiagnosisDetailActivity.class);
+            intent.putExtra(DiagnosisDetailActivity.EXTRA_PATIENT, medRec);
         } else{
+            intent = new Intent(context, DiagnosisActivity.class);
             intent.putExtra(DiagnosisActivity.EXTRA_DOCTOR, medRec);
         }
         context.startActivity(intent);
